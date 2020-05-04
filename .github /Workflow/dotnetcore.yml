@@ -1,0 +1,43 @@
+name: .NET Core
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest- ubuntu-18.04
+ пользы: actionubuntu-18.04s/setup-java@v1.3.0
+ с:
+ # Версия Java, чтобы сделать доступным на пути. Принимает целую или семверрную версию Java, либо 1.X синтаксис (например, 1.8 = > Java 8.икс)
+ версия Java: 
+ # Тип пакета (jre, jdk, jdk+fx)
+ java-пакет: # необязательно, по умолчанию это jdk
+ # Архитектура (x86, x64) пакета.
+ архитектура: # необязательно, по умолчанию это x64
+ # Путь к тому, где находится сжатый JDK. Этот путь может находиться в исходном репозитории или в локальном пути агента.
+ jdkFile: # необязательно
+ # ID репозитория distributionManagement в pom.XML-файл. По умолчанию используется `github`
+ идентификатор сервера: # необязательно
+ # Имя переменной среды для имени пользователя для аутентификации в репозитории Apache Maven. Значение по умолчанию - $GITHUB_ACTOR
+ имя пользователя сервера: # необязательно
+ # Имя переменной среды для пароля или маркера для аутентификации в репозитории Apache Maven. Значение по умолчанию - $GITHUB_TOKEN
+ сервер-пароль: # необязательно
+ # Путь к месту установки.xml-файл будет записан. Значение по умолчанию -~/.м2.
+ настройки-путь: # необязательно
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.101
+    - name: Install dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+    - name: Test
+      run: dotnet test --no-restore --verbosity normal
